@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>袋鼠式护理观察日记 - A4打印版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f5f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .a4-container {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            padding: 15mm;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 装饰元素 */
+        .corner-decoration {
+            position: absolute;
+            width: 60mm;
+            height: 60mm;
+            opacity: 0.1;
+        }
+        
+        .top-left {
+            top: 0;
+            left: 0;
+            border-top: 20mm solid #ffd6e0;
+            border-right: 20mm solid transparent;
+        }
+        
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            border-bottom: 20mm solid #c2e6ff;
+            border-left: 20mm solid transparent;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 10mm;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 28pt;
+            color: #e67e8c;
+            margin-bottom: 5mm;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .header h1:after {
+            content: "";
+            position: absolute;
+            bottom: -3mm;
+            left: 15%;
+            width: 70%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #ff9a9e, transparent);
+        }
+        
+        .header p {
+            font-size: 12pt;
+            color: #888;
+            max-width: 160mm;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .kangaroo-icon {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        
+        .kangaroo-icon.top {
+            top: 10mm;
+            right: 10mm;
+            font-size: 40pt;
+        }
+        
+        .kangaroo-icon.bottom {
+            bottom: 10mm;
+            left: 10mm;
+            font-size: 40pt;
+            transform: rotate(15deg);
+        }
+        
+        .journal-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-size: 14pt;
+            color: #5d5dff;
+            margin: 8mm 0 5mm;
+            padding-bottom: 2mm;
+            border-bottom: 1.5px solid #e0e0ff;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: -1.5px;
+            left: 0;
+            width: 40mm;
+            height: 1.5px;
+            background: #ff9a9e;
+        }
+        
+        .section-subtitle {
+            font-size: 10pt;
+            color: #777;
+            margin-bottom: 4mm;
+            font-style: italic;
+        }
+        
+        .entry-card {
+            margin-bottom: 8mm;
+            padding: 5mm;
+            border-radius: 5mm;
+            border: 1px solid #e8e8e8;
+            background: #fcfcff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3mm;
+        }
+        
+        .card-icon {
+            width: 12mm;
+            height: 12mm;
+            background: #ffe8e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 4mm;
+            font-size: 16pt;
+            color: #ff6b6b;
+        }
+        
+        .card-title {
+            font-size: 12pt;
+            color: #5d5dff;
+            font-weight: 600;
+        }
+        
+        .image-area {
+            width: 100%;
+            height: 45mm;
+            background: #f8faff;
+            border-radius: 3mm;
+            margin-bottom: 4mm;
+            border: 1px dashed #c2e0ff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #5d9bff;
+        }
+        
+        .image-area i {
+            font-size: 24pt;
+            margin-bottom: 3mm;
+        }
+        
+        .image-area p {
+            font-size: 10pt;
+        }
+        
+        .text-area {
+            width: 100%;
+            min-height: 25mm;
+            padding: 3mm;
+            border: 1px solid #e0e0e0;
+            border-radius: 3mm;
+            font-size: 11pt;
+            line-height: 1.6;
+            background: white;
+        }
+        
+        .prompt-text {
+            color: #999;
+            font-style: italic;
+            font-size: 9pt;
+            margin-top: 1mm;
+        }
+        
+        .reflection-section {
+            display: flex;
+            gap: 8mm;
+            margin-top: 5mm;
+        }
+        
+        .reflection-card {
+            flex: 1;
+            padding: 5mm;
+            border-radius: 5mm;
+            border: 1px solid #e8e8e8;
+            background: #fcfcff;
+        }
+        
+        .footer {
+            margin-top: auto;
+            padding-top: 5mm;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 10pt;
+        }
+        
+        .quote-box {
+            background: #fff5f5;
+            border-radius: 3mm;
+            padding: 5mm;
+            margin: 8mm 0;
+            border-left: 3mm solid #ffd6e0;
+        }
+        
+        .quote-text {
+            font-size: 11pt;
+            color: #666;
+            font-style: italic;
+            line-height: 1.7;
+        }
+        
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8mm;
+            padding-top: 5mm;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .signature-box {
+            width: 45%;
+            text-align: center;
+        }
+        
+        .signature-line {
+            width: 80%;
+            height: 1px;
+            background: #999;
+            margin: 10mm auto 2mm;
+        }
+        
+        .print-instructions {
+            background: #f0f8ff;
+            padding: 5mm;
+            border-radius: 3mm;
+            margin-top: 5mm;
+            text-align: center;
+            font-size: 10pt;
+            color: #5d9bff;
+        }
+        
+        /* 打印优化 */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .a4-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 15mm;
+                width: 210mm;
+                min-height: 297mm;
+                page-break-after: always;
+            }
+            
+            .print-instructions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="a4-container">
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        
+        <i class="fas fa-paw kangaroo-icon top"></i>
+        <i class="fas fa-heart kangaroo-icon bottom"></i>
+        
+        <div class="header">
+            <h1>早产儿观察日记</h1>
+            <p>记录生命的温暖瞬间，感受袋鼠式护理的力量 | 基于世界早产儿日宣传纪录片</p>
+        </div>
+        
+        <div class="quote-box">
+            <p class="quote-text">"每一个早到的天使，都值得最温暖的拥抱。袋鼠式护理不仅是技术，更是爱的传递，是生命最初的对话。"</p>
+        </div>
+        
+        <div class="journal-content">
+            <div class="section-title">触动心灵的画面</div>
+            <div class="section-subtitle">请回顾纪录片中让你印象深刻的三个画面，并在下方记录你的观察与思考</div>
+            
+            <!-- 画面1 -->
+            <div class="entry-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="card-title">画面一：初生的脆弱</div>
+                </div>
+                <div class="image-area">
+                    <i class="fas fa-camera"></i>
+                    <p>绘制或粘贴触动你的画面</p>
+                </div>
+                <div class="text-area">
+                    这个画面展示了早产儿的哪些生理特点？它为什么特别触动你？从专业角度看，这个场景反映了什么护理需求？
+                </div>
+                <div class="prompt-text">提示：可描述婴儿体型、医疗设备、家属表情等细节</div>
+            </div>
+            
+            <!-- 画面2 -->
+            <div class="entry-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-hands-holding"></i>
+                    </div>
+                    <div class="card-title">画面二：家庭的挑战</div>
+                </div>
+                <div class="image-area">
+                    <i class="fas fa-camera"></i>
+                    <p>绘制或粘贴触动你的画面</p>
+                </div>
+                <div class="text-area">
+                    这个画面展示了早产儿家庭面临的哪些挑战？它让你产生了什么感受？家属的情绪状态如何影响护理过程？
+                </div>
+                <div class="prompt-text">提示：考虑经济压力、心理负担、家庭关系等维度</div>
+            </div>
+            
+            <!-- 画面3 -->
+            <div class="entry-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="card-title">画面三：希望的时刻</div>
+                </div>
+                <div class="image-area">
+                    <i class="fas fa-camera"></i>
+                    <p>绘制或粘贴触动你的画面</p>
+                </div>
+                <div class="text-area">
+                    这个画面展示了哪些护理干预措施？它为什么给你带来希望？袋鼠式护理如何在这个场景中发挥作用？
+                </div>
+                <div class="prompt-text">提示：注意医护人员动作、家属参与、婴儿反应等细节</div>
+            </div>
+            
+            <div class="section-title">专业反思</div>
+            
+            <div class="reflection-section">
+                <!-- 家属压力 -->
+                <div class="reflection-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <div class="card-title">家属的压力</div>
+                    </div>
+                    <div class="text-area" style="min-height: 35mm;">
+                        1. ________________________________________________________
+                        <br><br>
+                        2. ________________________________________________________
+                    </div>
+                    <div class="prompt-text">记录早产儿家属可能承受的两种主要压力</div>
+                </div>
+                
+                <!-- 护士行动 -->
+                <div class="reflection-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-user-nurse"></i>
+                        </div>
+                        <div class="card-title">护士的行动</div>
+                    </div>
+                    <div class="text-area" style="min-height: 35mm;">
+                        作为护士，我能为早产儿做的一件事：
+                        <br><br>
+                        ________________________________________________________
+                        <br><br>
+                        ________________________________________________________
+                    </div>
+                    <div class="prompt-text">思考如何应用袋鼠式护理技术</div>
+                </div>
+            </div>
+            
+            <div class="section-title">学习感悟</div>
+            <div class="text-area" style="min-height: 40mm; margin-top: 2mm;">
+                通过这次观察，我对早产儿护理有了哪些新的理解？袋鼠式护理如何改变了我对护理专业的认识？未来我将如何将这些感悟应用到临床实践中？
+            </div>
+            
+            <div class="signature-area">
+                <div class="signature-box">
+                    <div class="signature-line"></div>
+                    <div>学生签名</div>
+                </div>
+                <div class="signature-box">
+                    <div class="signature-line"></div>
+                    <div>日期</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>每一份记录都是对生命的尊重，每一次思考都是专业成长的足迹</p>
+            <p>妇产科护理学 · 袋鼠式护理教学项目</p>
+        </div>
+        
+        <div class="print-instructions">
+            <i class="fas fa-print"></i> 提示：使用浏览器打印功能（Ctrl+P），选择A4纸张尺寸，边距设置为"默认"或"最小"
+        </div>
+    </div>
+
+    <script>
+        // 添加简单的交互效果
+        document.querySelectorAll('.image-area').forEach(area => {
+            area.addEventListener('click', function() {
+                this.style.backgroundColor = '#e6f7ff';
+                this.innerHTML = '<i class="fas fa-check-circle" style="color:#4CAF50; font-size:24pt;"></i><p>已标记绘制区域</p>';
+            });
+        });
+    </script>
+</body>
+</html>
